@@ -14,7 +14,7 @@ exitcode=$?
 #echo $exitcode
 hiradochosen=$(cat /tmp/dialogresult.jnk | cut -d% -f1)
 
-#echo "hiradochosen is $hiradochosen"
+echo "hiradochosen is $hiradochosen"
 
 videolink=$(grep "videok/video" /tmp/tmp.txt | grep hirado | cut -d "\"" -f2 | uniq | head | sed "$hiradochosen""q;d")
 
@@ -32,7 +32,7 @@ curl -s www.atv.hu/$videolink > /tmp/videosite.tmp
 #	break
 #done
 
-videochosen="$(grep mp4 /tmp/videosite.tmp | cut -d "\"" -f6)"
+videochosen="$(grep mp4 /tmp/videosite.tmp | sed 's/.*data-streamurl=\"//'| cut -d "\"" -f1)"
 
 streamserverIP="$(grep streamServer /tmp/videosite.tmp | cut -d "\"" -f2)"
 echo "your chosen video's link is $videochosen and the ip of the streamserver is $streamserverIP"
